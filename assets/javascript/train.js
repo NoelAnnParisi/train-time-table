@@ -8,30 +8,35 @@ var config = {
 
 firebase.initializeApp(config);
 
-// When adding trains, administrators should be able to submit the following:
-// Train Name
-// Destination
-// First Train Time -- in military time
-// Frequency -- in minutes
-// Code this app to calculate when the next train will arrive; this should be relative to the current time.
-// Users from many different machines must be able to view same train times.
-// Styling and theme are completely up to you. Get Creative!
-
-//<td class="train-name"> this is train name</td>
-//<td class="destination">Where to?</td>
-//<td class="departure">When are we leaving?</td>
-//<td class="frequency">How often?</td>
-
 const train = {
-    name: "Polar Express",
-    destination: "LA",
-    firstTrainTime: moment(), // military time
-    frequency: 3 //minutes
+    name: "Polar Express", // name that train!
+    destination: "LA", // where to??
+    frequency: "", //minutes between trains
+    nextArrival: "", // military time & figure this out 
+    minutesAway: "" // minutes away  
 };
+const dbRefObject = firebase.database().ref();
 
 // get element
-let nameElement = $('.train-name').text();
-let destinationElement = $('.destination').text();
-let departureElement = $('.departure').text();
-let frequencyElement = $('.frequency').text();
+dbRefObject.on("value", snap => {
+	;
+});
 
+$('#submit').on('click', function(event) {
+
+    event.preventDefault();
+
+    const firstDeparture = moment($('#first-departure-time').val().trim(), "HH:mm"); //hh:mm
+    const frequency = parseInt($('#frequency').val().trim());
+    const nextTrain = firstDeparture.add(frequency, 'minutes');
+    const minUntilNextTrain = nextTrain.diff(moment(), 'minutes');
+
+    const $trainName = $("<td>",{'class': 'train-name', text: $('#train-name').val().trim() });
+    const $destination = $("<td>",{'class': 'destination', text: $('#destination').val().trim() });
+    const $frequency = $("<td>",{'class': 'frequency', text: $('#frequency').val().trim()});
+    const $nextArrival = $("<td>",{'class': 'next-arrival', text: moment(nextTrain,"HH:mm").format("HH:mm")});
+    const $minutesAway = $("<td>",{'class': 'minutes-away', text: (minUntilNextTrain)});
+ 	
+ 	const $newRow = $('<tr>').append($trainName, $destination, $frequency, $nextArrival, $minutesAway);
+    $('tbody').append($newRow);
+})

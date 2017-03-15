@@ -13,40 +13,43 @@
         <tr>
             <th>Train Name</th>
             <th>Destination</th>
-            <th>Departure Time</th>
             <th>Frequency</th>
+            <th>Next Arrival</th>
+            <th>Minutes Away</th>
         </tr>
         <tr>
             <td class="train-name"> this is train name</td>
             <td class="destination">Where to?</td>
-            <td class="departure">When are we leaving?</td>
             <td class="frequency">How often?</td>
+            <td class="next-arrival">When are we leaving?</td>
+            <td class="minutes-away">Minutes Away!?</td>
         </tr>
     </table>
+
     <form>
         Train name:
         <br>
-        <input type="text" name="name" value="">
+        <input id="train-name" type="text"  required>
         <br>
         Destination:
         <br>
-        <input type="text" name="destination" value="">
+        <input id="destination" type="text" required>
         <br>
-        Departure
+        First Departure Time (HH:MM - military time)
         <br>
-        <input type="text" name="departure" value="">
+        <input id="first-departure-time" type="text" value ="18:30" pattern="^(?:\d|[01]\d|2[0-3]):[0-5]\d$" required>
 		<br>
         Frequency
         <br>
-        <input type="text" name="frequency" value="">
+        <input id="frequency" type="text" value="10" required>
         <br>
-        <input type="submit" value="Submit">
+        <input id="submit" type="submit" value="Submit">
     </form>
-    
-    <script type="text/javascript" src="assets/javascript/moment.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="assets/javascript/train.js"></script>
+    <script src="assets/javascript/moment.js"></script>
+    <script src="assets/javascript/train.js"></script>
 </body>
 
 </html>
