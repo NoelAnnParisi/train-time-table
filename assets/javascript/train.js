@@ -8,35 +8,43 @@ var config = {
 
 firebase.initializeApp(config);
 
-const train = {
-    name: "Polar Express", // name that train!
-    destination: "LA", // where to??
-    frequency: "", //minutes between trains
-    nextArrival: "", // military time & figure this out 
-    minutesAway: "" // minutes away  
-};
-const dbRefObject = firebase.database().ref();
-
-// get element
-dbRefObject.on("value", snap => {
-	;
-});
+const dbRefObject = firebase.database().ref().child('train');
 
 $('#submit').on('click', function(event) {
 
     event.preventDefault();
 
-    const firstDeparture = moment($('#first-departure-time').val().trim(), "HH:mm"); //hh:mm
+    const trainName = $('#train-name').val().trim();
+    const destination = $('#destination').val().trim(); 
+    const firstDeparture = moment($('#first-departure-time').val().trim(), "HH:mm").subtract(1, "years").format('HH:mm');
     const frequency = parseInt($('#frequency').val().trim());
-    const nextTrain = firstDeparture.add(frequency, 'minutes');
-    const minUntilNextTrain = nextTrain.diff(moment(), 'minutes');
 
-    const $trainName = $("<td>",{'class': 'train-name', text: $('#train-name').val().trim() });
-    const $destination = $("<td>",{'class': 'destination', text: $('#destination').val().trim() });
-    const $frequency = $("<td>",{'class': 'frequency', text: $('#frequency').val().trim()});
-    const $nextArrival = $("<td>",{'class': 'next-arrival', text: moment(nextTrain,"HH:mm").format("HH:mm")});
-    const $minutesAway = $("<td>",{'class': 'minutes-away', text: (minUntilNextTrain)});
- 	
- 	const $newRow = $('<tr>').append($trainName, $destination, $frequency, $nextArrival, $minutesAway);
+    const train = {
+        name: trainName,
+        destination: destination,
+        frequency: frequency,
+        firstDeparture: firstDeparture
+    };
+
+    dbRefObject.push(train);
+});
+
+
+dbRefObject.on("child_added", snap => {
+
+    const now = moment();
+    const diffTime = now.diff(moment(snap.val().firstDeparture, "HH:mm"), "minutes");
+    const tRemainder = diffTime % snap.val().frequency;
+    const minutesAway = snap.val().frequency - tRemainder;
+    const nextTrain = now.add(minutesAway, "minutes").format("hh:mm");
+
+    const $trainName = $("<td>", { 'class': 'train-name', text: snap.val().name });
+    const $destination = $("<td>", { 'class': 'destination', text: snap.val().destination });
+    const $frequency = $("<td>", { 'class': 'frequency', text: snap.val().frequency });
+    const $nextArrival = $("<td>", { 'class': 'next-arrival', text: nextTrain });
+    const $minutesAway = $("<td>", { 'class': 'minutes-away', text: minutesAway });
+
+    const $newRow = $('<tr>').append($trainName, $destination, $frequency, $nextArrival, $minutesAway);
+
     $('tbody').append($newRow);
-})
+});
