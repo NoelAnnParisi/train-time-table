@@ -16,29 +16,30 @@
             <th>Frequency</th>
             <th>Next Arrival</th>
             <th>Minutes Away</th>
+            <th></th>
+            <th></th>
         </tr>
     </table>
 
-    <form>
+    <form id="add-train" class="train-form">
         Train name:
         <br>
-        <input id="train-name" type="text"  required>
-        <br>
-        Destination:
+        <input id="train-name" type="text" required>
+        <br> Destination:
         <br>
         <input id="destination" type="text" required>
-        <br>
-        First Departure Time (HH:MM - military time)
+        <br> First Departure Time (HH:MM - military time)
         <br>
         <input id="first-departure-time" type="text" pattern="^(?:\d|[01]\d|2[0-3]):[0-5]\d$" required>
-		<br>
-        Frequency
+        <br> Frequency
         <br>
         <input id="frequency" type="text" required>
         <br>
         <input id="submit" type="submit" value="Submit">
     </form>
-
+    <br>
+    
+    <script src="https://use.fontawesome.com/33adee7eb0.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="assets/javascript/moment.js"></script>

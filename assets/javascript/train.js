@@ -1,3 +1,7 @@
+// remove icon <i class="fa fa-times" aria-hidden="true"></i>
+// pencil icon  <i class="fa fa-pencil" aria-hidden="true"></i>
+// save icon  <i class="fa fa-check" aria-hidden="true"></i>
+
 var config = {
     apiKey: "AIzaSyBEDvLJv4xyHrV4p4nZz9onZWhNi12pERU",
     authDomain: "train-times-421d2.firebaseapp.com",
@@ -31,6 +35,7 @@ $('#submit').on('click', function(event) {
 
 // when a child is added populate that informarion to the DOM
 dbRefObject.on("child_added", snap => {
+
     // using moment.js calculate the next train time and minutes away
     const now = moment();
     const diffTime = now.diff(moment(snap.val().firstDeparture, "HH:mm"), "minutes");
@@ -43,8 +48,10 @@ dbRefObject.on("child_added", snap => {
     const $frequency = $("<td>", { 'class': 'frequency', text: snap.val().frequency });
     const $nextArrival = $("<td>", { 'class': 'next-arrival', text: nextTrain });
     const $minutesAway = $("<td>", { 'class': 'minutes-away', text: minutesAway });
+    const $iconEdit = $('<td>', { 'class': 'update' }).html('<i class="fa fa-pencil" aria-hidden="true"></i>');
+    const $iconRemove = $('<td>', { 'class': 'remove' }).html('<i class="fa fa-times" aria-hidden="true"></i>');
     // create a new row each time a user adds train information 
-    const $newRow = $('<tr>', { id: snap.key }).append($trainName, $destination, $frequency, $nextArrival, $minutesAway);
+    const $newRow = $('<tr>', { id: snap.key }).append($trainName, $destination, $frequency, $nextArrival, $minutesAway, $iconEdit, $iconRemove);
     // append that information to the body of the table
     $('tbody').append($newRow);
 
@@ -57,6 +64,30 @@ dbRefObject.on("child_added", snap => {
         const nextTrain = now.add(minutesAway, "minutes").format("hh:mm");
         $('#' + snap.key + "> td.minutes-away").text(parseInt(minutesAway));
         $('#' + snap.key + "> td.next-arrival").text(nextTrain);
-        console.log("this is running!");
     }, 60000);
+});
+
+$('table').on('click', '.fa-pencil', event => {
+    //replace the edit icon with the save icon
+    const $this = $(event.target);
+    const rowId = $this.closest('tr').attr('id');
+    $('#' + rowId).find('.train-name').html('<input type="text">');
+    $('#' + rowId).find('.destination').html('<input type="text">');
+    $('#' + rowId).find('.frequency').html('<input type="number">');
+    $(event.target).replaceWith($('<i class="fa fa-check" aria-hidden="true"></i>'));
+
+
+
+    // now to save the edited data
+    $('.fa-check').on('click', event => {
+        const _this = $(event.target);
+        _this.replaceWith($('<i>', { 'class': 'fa fa-pencil', 'aria-hidden': 'true' }));
+        // const this = $(event.target);
+        // const rowId = _this.closest('tr').attr('id');
+        // $('#' + rowId).find('.train-name').innerHTML('$(".train-name").text()');
+        // $('#' + rowId).find('.destination').html('<input type="text">');
+        // $('#' + rowId).find('.frequency').html('<input type="number">');
+
+
+    });
 });
