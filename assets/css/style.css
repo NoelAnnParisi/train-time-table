@@ -1,16 +1,56 @@
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(silver, aquamarine);
+}
+
 table {
     display: flex;
-    margin-bottom:5%;
+    margin-bottom: 5%;
     align-items: center;
     justify-content: center;
+    font-family: 'Sansita', sans-serif;
 }
 
 form {
+    font-family: 'Sansita', sans-serif;
     flex-direction: column;
-    align-items: center;
     display: flex;
-    border: 1px solid black;
-    
+    justify-content: center;
+    border-radius: 5%;
+}
+
+input {
+    font-family: 'Sansita', sans-serif;
+    width: auto;
+}
+
+h1, h2 {
+	font-family: 'Sansita', sans-serif;
+	text-align: center;
+	border-bottom: 6px solid aquamarine;
+}
+
+h2 {
+    border-bottom: 6px solid silver;
+}
+
+button {
+    font-family: 'Sansita', sans-serif;
+    line-height: 2.5;
+    margin: 1%;
+}
+
+input {
+    flex-direction: column;
+    margin: 1%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    line-height: 2.5;
+    color: black;
 }
 
 td,
@@ -21,5 +61,5 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    /*background-color: #dddddd;*/
 }

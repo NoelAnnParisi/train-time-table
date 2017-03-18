@@ -4,16 +4,18 @@
 <head>
     <title>Train Time Table</title>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
-    <table>
+<div class= "container">
+    <table><h1>Train Schedule</h1>
         <tr>
             <th>Train Name</th>
             <th>Destination</th>
-            <th>Frequency</th>
+            <th>Frequency (minutes)</th>
             <th>Next Arrival</th>
             <th>Minutes Away</th>
         </tr>
@@ -21,23 +23,18 @@
 
     <form id="add-train" class="train-form">
     <h2>Train Information </h2>
-        Train name:
+        <input id="train-name" type="text" required placeholder="Train name">
         <br>
-        <input id="train-name" type="text" required>
-        <br> Destination:
+        <input id="destination" type="text" required placeholder="Destination">
         <br>
-        <input id="destination" type="text" required>
-        <br> First Departure Time (HH:MM - military time)
+        <input id="first-departure-time" type="text" pattern="^(?:\d|[01]\d|2[0-3]):[0-5]\d$" required placeholder="First Departure Time (HH:MM - military time)">
         <br>
-        <input id="first-departure-time" type="text" pattern="^(?:\d|[01]\d|2[0-3]):[0-5]\d$" required>
-        <br> Frequency
+        <input id="frequency" type="text" required placeholder="Frequency (in minutes)">
         <br>
-        <input id="frequency" type="text" required>
-        <br>
-        <input id="submit" type="submit" value="Submit">
+        <button id="submit" type="submit">Submit!</button>
     </form>
     <br>
-    
+ </div>   
     <script src="https://use.fontawesome.com/33adee7eb0.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

@@ -31,6 +31,11 @@ $('#submit').on('click', function(event) {
     const frequency = parseInt($('#frequency').val().trim());
     const nextArrival = moment($('#next-arrival').val(), 'HH:mm').add(12, 'hours').format('HH:mm');
 
+    $('#train-name').val('');
+    $('#destination').val('');
+    $('#first-departure-time').val('');
+    $('#frequency').val('');
+
     const train = {
         name: trainName,
         destination: destination,
